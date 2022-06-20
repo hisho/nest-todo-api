@@ -9,3 +9,20 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Todo {
+ /// ID
+ id          Int      @id @default(autoincrement())
+ /// UID
+ uid         String   @unique
+ /// タイトル
+ title       String
+ /// 説明文
+ description String?
+ /// 作成日
+ createdAt   DateTime @default(now()) @map("created_at")
+ /// 更新日
+ updatedAt   DateTime @default(now()) @map("updated_at")
+
+ @@map("todos")
+}
