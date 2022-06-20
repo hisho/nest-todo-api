@@ -17,4 +17,16 @@ export class TodoService {
       data,
     });
   }
+
+  async update(args: {
+    where: Prisma.TodoWhereUniqueInput;
+    data: Prisma.TodoUpdateInput;
+  }) {
+    const { where, data } = args;
+
+    return this.prisma.todo.update({
+      where,
+      data,
+    });
+  }
 }

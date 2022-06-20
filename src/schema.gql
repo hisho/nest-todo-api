@@ -7,12 +7,25 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input DateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
+
 type Mutation {
   createTodo(data: TodoCreateInput!): Todo!
+  updateTodo(data: TodoUpdateInput!, where: TodoWhereUniqueInput!): Todo!
+}
+
+input NullableStringFieldUpdateOperationsInput {
+  set: String
 }
 
 type Query {
   todos: [Todo!]!
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
 }
 
 type Todo {
@@ -40,5 +53,18 @@ input TodoCreateInput {
   description: String
   title: String!
   updatedAt: DateTime
+  uuid: String
+}
+
+input TodoUpdateInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  uuid: StringFieldUpdateOperationsInput
+}
+
+input TodoWhereUniqueInput {
+  id: Int
   uuid: String
 }
