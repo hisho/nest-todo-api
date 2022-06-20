@@ -1,5 +1,6 @@
 import { PrismaClient, Todo } from '@prisma/client';
 import { v4 } from 'uuid';
+
 const prisma = new PrismaClient();
 
 /**
@@ -9,7 +10,7 @@ const prisma = new PrismaClient();
 const todoData: Todo[] = [
   {
     id: 1,
-    uid: v4(),
+    uuid: v4(),
     title: '初めてのTODO',
     description: '初めてのTODOを作成する',
     createdAt: new Date('2022-01-01T00:00:00+09:00'),

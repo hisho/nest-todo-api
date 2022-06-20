@@ -4,7 +4,7 @@ import { Todo as Todos } from '../../../@generated/prisma-nestjs-graphql/todo/to
 @ObjectType()
 export class Todo extends PickType(Todos, [
   'id',
-  'uid',
+  'uuid',
   'title',
   'description',
   'createdAt',

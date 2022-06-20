@@ -19,7 +19,7 @@ model Todo {
  /// ID
  id          Int      @id @default(autoincrement())
  /// UID
- uid         String   @unique
+ uuid        String   @unique @default(uuid())
  /// タイトル
  title       String
  /// 説明文

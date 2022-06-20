@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TodoService } from './todo.service';
 import { Todo } from './entities/todo.entity';
-import { CreateTodoInput } from './dto/create-todo.input';
+import { CreateOneTodoArgs } from '../../@generated/prisma-nestjs-graphql/todo/create-one-todo.args';
 
 @Resolver(() => Todo)
 export class TodoResolver {
@@ -13,7 +13,7 @@ export class TodoResolver {
   }
 
   @Mutation(() => Todo)
-  async create(@Args('createTodoInput') createTodoInput: CreateTodoInput) {
-    return this.postsService.create(createTodoInput);
+  async createTodo(@Args() args: CreateOneTodoArgs) {
+    return this.postsService.create(args);
   }
 }

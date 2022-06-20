@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
-import { CreateTodoInput } from './dto/create-todo.input';
 
 @Injectable()
 export class TodoService {
@@ -10,11 +10,11 @@ export class TodoService {
     return this.prisma.todo.findMany();
   }
 
-  async create(createTodoInput: CreateTodoInput) {
+  async create(args: { data: Prisma.TodoCreateInput }) {
+    const { data } = args;
+
     return this.prisma.todo.create({
-      data: {
-        ...createTodoInput,
-      },
+      data,
     });
   }
 }
