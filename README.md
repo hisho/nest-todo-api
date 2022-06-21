@@ -17,14 +17,7 @@ $ docker-compose up
 $ yarn start:dev
 ```
 
-### open Nest.js
+### open graphql playground
 ```shell
-$ open http://localhost:4000
-```
-
-## Commands
-
-### Nest.js start develop
-```shell
-$ yarn start:dev
+$ open http://localhost:4000/graphql
 ```
