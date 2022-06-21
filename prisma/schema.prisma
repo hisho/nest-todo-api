@@ -13,7 +13,9 @@ datasource db {
 generator nestgraphql {
   provider = "prisma-nestjs-graphql"
   output = "../src/@generated/prisma-nestjs-graphql"
- }
+  fields_Validator_from = "class-validator"
+  fields_Validator_input = true
+}
 
 model Todo {
  /// ID
@@ -21,8 +23,11 @@ model Todo {
  /// UID
  uuid        String   @unique @default(uuid())
  /// タイトル
+ /// @Validator.IsNotEmpty()
+ /// @Validator.MaxLength(255)
  title       String
  /// 説明文
+ /// @Validator.MaxLength(255)
  description String?
  /// 作成日
  createdAt   DateTime @default(now()) @map("created_at")
