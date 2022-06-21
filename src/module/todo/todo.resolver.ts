@@ -1,25 +1,25 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TodoService } from './todo.service';
 import { Todo } from './entities/todo.entity';
-import { CreateOneTodoArgs } from '../../@generated/prisma-nestjs-graphql/todo/create-one-todo.args';
-import { UpdateOneTodoArgs } from '../../@generated/prisma-nestjs-graphql/todo/update-one-todo.args';
+import { CreateTodoInput } from './dto/create-todo.input';
+import { UpdateTodoInput } from './dto/update-todo.input';
 
 @Resolver(() => Todo)
 export class TodoResolver {
   constructor(private readonly postsService: TodoService) {}
 
   @Query(() => [Todo], { name: 'todos' })
-  findAll() {
+  async findAll() {
     return this.postsService.findAll();
   }
 
   @Mutation(() => Todo)
-  async createTodo(@Args() args: CreateOneTodoArgs) {
-    return this.postsService.create(args);
+  async createTodo(@Args('input') input: CreateTodoInput) {
+    return this.postsService.create(input);
   }
 
   @Mutation(() => Todo)
-  async updateTodo(@Args() args: UpdateOneTodoArgs) {
-    return this.postsService.update(args);
+  async updateTodo(@Args('input') input: UpdateTodoInput) {
+    return this.postsService.update(input);
   }
 }
