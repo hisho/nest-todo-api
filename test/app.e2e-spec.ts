@@ -17,13 +17,16 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/graphql (Todos)', async () => {
-    const response = await request(app.getHttpServer())
+  it('/graphql (createTodo -> Todo)', async () => {
+    let todo;
+    await request(app.getHttpServer())
       .post('/graphql')
       .send({
         query: `
-{
-  todo(uuid: "b87c9dee-9d61-40d3-9591-f99fc4f7ec56") {
+mutation {
+  createTodo(
+    input: { title: "新しいTODO", description: "新しいTODOの説明です" }
+  ) {
     createdAt
     description
     id
@@ -32,18 +35,38 @@ describe('AppController (e2e)', () => {
     uuid
   }
 }
-`,
-        variables: {
-          uuid: 'b87c9dee-9d61-40d3-9591-f99fc4f7ec56',
-        },
-      });
-    expect(response.ok).toBeTruthy();
-    expect(response.body.data.errors).toBeUndefined();
-    expect(response.body.data.todo).toHaveProperty('uuid');
-    expect(response.body.data.todo).toHaveProperty('id');
-    expect(response.body.data.todo).toHaveProperty('title');
-    expect(response.body.data.todo).toHaveProperty('description');
-    expect(response.body.data.todo).toHaveProperty('createdAt');
-    expect(response.body.data.todo).toHaveProperty('updatedAt');
+        `,
+      })
+      .expect((res) => {
+        todo = res.body.data.createTodo;
+      })
+      .then(() =>
+        request(app.getHttpServer())
+          .post('/graphql')
+          .send({
+            query: `
+{
+  todo(uuid: "${todo.uuid}") {
+    createdAt
+    description
+    id
+    title
+    updatedAt
+    uuid
+  }
+}
+            `,
+          })
+          .expect((res) => {
+            expect(res.body.data.todo).toEqual({
+              createdAt: todo.createdAt,
+              description: todo.description,
+              id: todo.id,
+              title: todo.title,
+              updatedAt: todo.updatedAt,
+              uuid: todo.uuid,
+            });
+          }),
+      );
   });
 });
