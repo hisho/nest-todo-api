@@ -16,13 +16,16 @@ type Mutation {
   """todo作成"""
   createTodo(input: CreateTodoInput!): Todo!
 
+  """todo削除"""
+  deleteTodo(uuid: String!): Todo!
+
   """todo更新"""
   updateTodo(input: UpdateTodoInput!): Todo!
 }
 
 type Query {
   """todo一覧取得"""
-  findAll: [Todo!]!
+  todos: [Todo!]!
 }
 
 type Todo {

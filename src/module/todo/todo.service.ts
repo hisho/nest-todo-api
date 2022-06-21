@@ -38,4 +38,12 @@ export class TodoService {
       },
     });
   }
+
+  async delete(uuid: string) {
+    return this.prisma.todo.delete({
+      where: {
+        uuid,
+      },
+    });
+  }
 }

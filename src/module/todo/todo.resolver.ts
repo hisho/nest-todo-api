@@ -9,7 +9,7 @@ export class TodoResolver {
   constructor(private readonly postsService: TodoService) {}
 
   @Query(() => [Todo], { description: 'todo一覧取得' })
-  async findAll() {
+  async todos() {
     return this.postsService.findAll();
   }
 
@@ -21,5 +21,10 @@ export class TodoResolver {
   @Mutation(() => Todo, { description: 'todo更新' })
   async updateTodo(@Args('input') input: UpdateTodoInput) {
     return this.postsService.update(input);
+  }
+
+  @Mutation(() => Todo, { description: 'todo削除' })
+  async deleteTodo(@Args('uuid') uuid: string) {
+    return this.postsService.delete(uuid);
   }
 }
