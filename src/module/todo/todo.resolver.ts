@@ -8,17 +8,17 @@ import { UpdateTodoInput } from './dto/update-todo.input';
 export class TodoResolver {
   constructor(private readonly postsService: TodoService) {}
 
-  @Query(() => [Todo], { name: 'todos' })
+  @Query(() => [Todo], { description: 'todo一覧取得' })
   async findAll() {
     return this.postsService.findAll();
   }
 
-  @Mutation(() => Todo)
+  @Mutation(() => Todo, { description: 'todo作成' })
   async createTodo(@Args('input') input: CreateTodoInput) {
     return this.postsService.create(input);
   }
 
-  @Mutation(() => Todo)
+  @Mutation(() => Todo, { description: 'todo更新' })
   async updateTodo(@Args('input') input: UpdateTodoInput) {
     return this.postsService.update(input);
   }
