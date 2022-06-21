@@ -11,6 +11,15 @@ export class TodoService {
     return this.prisma.todo.findMany();
   }
 
+  async findOne(uuid: string) {
+    return this.prisma.todo.findUnique({
+      rejectOnNotFound: true,
+      where: {
+        uuid,
+      },
+    });
+  }
+
   async create(input: CreateTodoInput) {
     const { title, description } = input;
 

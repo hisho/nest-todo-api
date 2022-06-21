@@ -24,6 +24,9 @@ type Mutation {
 }
 
 type Query {
+  """todo取得"""
+  todo(uuid: String!): Todo!
+
   """todo一覧取得"""
   todos: [Todo!]!
 }

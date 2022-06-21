@@ -13,6 +13,11 @@ export class TodoResolver {
     return this.postsService.findAll();
   }
 
+  @Query(() => Todo, { description: 'todo取得' })
+  async todo(@Args('uuid') uuid: string) {
+    return this.postsService.findOne(uuid);
+  }
+
   @Mutation(() => Todo, { description: 'todo作成' })
   async createTodo(@Args('input') input: CreateTodoInput) {
     return this.postsService.create(input);
