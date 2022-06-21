@@ -2,6 +2,16 @@
 
 ## Set up the Nest.js application
 
+### clone the repository
+```shell
+$ git clone git@github.com:hisho/nest-todo-api.git
+```
+
+### change directory to the repository
+```shell
+$ cd nest-todo-api
+```
+
 ### Nest.js install
 ```shell
 $ yarn install
