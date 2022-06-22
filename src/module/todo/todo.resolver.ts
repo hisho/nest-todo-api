@@ -9,22 +9,22 @@ export class TodoResolver {
   constructor(private readonly postsService: TodoService) {}
 
   @Query(() => [Todo], { description: 'todo一覧取得' })
-  async todos() {
+  todos() {
     return this.postsService.findAll();
   }
 
   @Query(() => Todo, { description: 'todo取得' })
-  async todo(@Args('uuid') uuid: string) {
+  todo(@Args('uuid') uuid: string) {
     return this.postsService.findOne(uuid);
   }
 
   @Mutation(() => Todo, { description: 'todo作成' })
-  async createTodo(@Args('input') input: CreateTodoInput) {
+  createTodo(@Args('input') input: CreateTodoInput) {
     return this.postsService.create(input);
   }
 
   @Mutation(() => Todo, { description: 'todo更新' })
-  async updateTodo(
+  updateTodo(
     @Args('uuid') uuid: string,
     @Args('input') input: UpdateTodoInput,
   ) {
@@ -32,7 +32,7 @@ export class TodoResolver {
   }
 
   @Mutation(() => Todo, { description: 'todo削除' })
-  async deleteTodo(@Args('uuid') uuid: string) {
+  deleteTodo(@Args('uuid') uuid: string) {
     return this.postsService.delete(uuid);
   }
 }

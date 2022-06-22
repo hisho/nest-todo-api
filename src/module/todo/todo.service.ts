@@ -12,7 +12,7 @@ export class TodoService {
   }
 
   async findOne(uuid: string) {
-    return this.prisma.todo.findUnique({
+    return await this.prisma.todo.findUnique({
       rejectOnNotFound: true,
       where: {
         uuid,
@@ -21,12 +21,9 @@ export class TodoService {
   }
 
   async create(input: CreateTodoInput) {
-    const { title, description } = input;
-
-    return this.prisma.todo.create({
+    return await this.prisma.todo.create({
       data: {
-        title,
-        description,
+        ...input,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -34,22 +31,19 @@ export class TodoService {
   }
 
   async update(uuid: string, input: UpdateTodoInput) {
-    const { title, description } = input;
-
-    return this.prisma.todo.update({
+    return await this.prisma.todo.update({
       where: {
         uuid,
       },
       data: {
-        title,
-        description,
+        ...input,
         updatedAt: new Date(),
       },
     });
   }
 
   async delete(uuid: string) {
-    return this.prisma.todo.delete({
+    return await this.prisma.todo.delete({
       where: {
         uuid,
       },
