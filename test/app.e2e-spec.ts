@@ -3,9 +3,15 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { useContainer } from 'class-validator';
+import { createTodoMutation, todoQuery } from './todo';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
+
+  /**
+   * graphqlへのリクエスト
+   */
+  const requestGraphql = () => request(app.getHttpServer()).post('/graphql');
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -19,23 +25,9 @@ describe('AppController (e2e)', () => {
 
   it('/graphql (createTodo -> Todo)', async () => {
     let todo;
-    await request(app.getHttpServer())
-      .post('/graphql')
+    await requestGraphql()
       .send({
-        query: `
-mutation createTodo($input: CreateTodoInput!){
-  createTodo(
-    input: $input
-  ) {
-    createdAt
-    description
-    id
-    title
-    updatedAt
-    uuid
-  }
-}
-        `,
+        query: createTodoMutation,
         variables: {
           input: {
             title: '新しいTODO',
@@ -47,21 +39,9 @@ mutation createTodo($input: CreateTodoInput!){
         todo = res.body.data.createTodo;
       })
       .then(() =>
-        request(app.getHttpServer())
-          .post('/graphql')
+        requestGraphql()
           .send({
-            query: `
-query todo($uuid: String!){
-  todo(uuid: $uuid) {
-    createdAt
-    description
-    id
-    title
-    updatedAt
-    uuid
-  }
-}
-            `,
+            query: todoQuery,
             variables: {
               uuid: todo.uuid,
             },
