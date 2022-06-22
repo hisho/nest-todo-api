@@ -20,7 +20,7 @@ type Mutation {
   deleteTodo(uuid: String!): Todo!
 
   """todo更新"""
-  updateTodo(input: UpdateTodoInput!): Todo!
+  updateTodo(input: UpdateTodoInput!, uuid: String!): Todo!
 }
 
 type Query {
@@ -54,5 +54,4 @@ type Todo {
 input UpdateTodoInput {
   description: String
   title: String
-  uuid: String!
 }

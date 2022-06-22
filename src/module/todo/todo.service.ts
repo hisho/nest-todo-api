@@ -33,8 +33,8 @@ export class TodoService {
     });
   }
 
-  async update(input: UpdateTodoInput) {
-    const { uuid, title, description } = input;
+  async update(uuid: string, input: UpdateTodoInput) {
+    const { title, description } = input;
 
     return this.prisma.todo.update({
       where: {

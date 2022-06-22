@@ -24,8 +24,11 @@ export class TodoResolver {
   }
 
   @Mutation(() => Todo, { description: 'todo更新' })
-  async updateTodo(@Args('input') input: UpdateTodoInput) {
-    return this.postsService.update(input);
+  async updateTodo(
+    @Args('uuid') uuid: string,
+    @Args('input') input: UpdateTodoInput,
+  ) {
+    return this.postsService.update(uuid, input);
   }
 
   @Mutation(() => Todo, { description: 'todo削除' })
