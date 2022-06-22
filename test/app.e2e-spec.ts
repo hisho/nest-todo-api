@@ -23,9 +23,9 @@ describe('AppController (e2e)', () => {
       .post('/graphql')
       .send({
         query: `
-mutation {
+mutation createTodo($input: CreateTodoInput!){
   createTodo(
-    input: { title: "新しいTODO", description: "新しいTODOの説明です" }
+    input: $input
   ) {
     createdAt
     description
@@ -36,6 +36,12 @@ mutation {
   }
 }
         `,
+        variables: {
+          input: {
+            title: '新しいTODO',
+            description: '新しいTODOの説明',
+          },
+        },
       })
       .expect((res) => {
         todo = res.body.data.createTodo;
@@ -45,8 +51,8 @@ mutation {
           .post('/graphql')
           .send({
             query: `
-{
-  todo(uuid: "${todo.uuid}") {
+query todo($uuid: String!){
+  todo(uuid: $uuid) {
     createdAt
     description
     id
@@ -56,6 +62,9 @@ mutation {
   }
 }
             `,
+            variables: {
+              uuid: todo.uuid,
+            },
           })
           .expect((res) => {
             expect(res.body.data.todo).toEqual({
